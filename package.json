@@ -10,6 +10,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
+  "type": "module",
   "private": true,
   "dependencies": {
     "@angular/common": "^17.0.6",
@@ -32,11 +33,16 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^17.0.6",
+    "@angular-eslint/builder": "^18.4.2",
+    "@angular-eslint/eslint-plugin": "^18.4.2",
     "@angular/cli": "^17.0.6",
     "@angular/compiler-cli": "^17.0.6",
+    "@eslint/js": "^9.15.0",
     "@types/jasmine": "~3.6.0",
     "@types/node": "^6.14.6",
+    "angular-eslint": "^18.4.2",
     "blue-harvest": "^0.2.1",
+    "eslint": "^8.57.1",
     "jasmine": "~2.6.0",
     "jasmine-core": "~3.6.0",
     "jasmine-spec-reporter": "~5.0.0",
@@ -46,7 +52,7 @@
     "karma-jasmine": "~4.0.0",
     "protractor": "^7.0.0",
     "ts-node": "5.0.1",
-    "tslint": "~6.1.0",
-    "typescript": "5.2.2"
+    "typescript": "^5.2.2",
+    "typescript-eslint": "^8.15.0"
   }
 }

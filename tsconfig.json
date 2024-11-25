@@ -5,6 +5,7 @@
     "baseUrl": "src",
     "sourceMap": true,
     "declaration": false,
+    "strict": true,
     "moduleResolution": "node",
     "experimentalDecorators": true,
     "target": "ES2022",

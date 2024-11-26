@@ -3,12 +3,12 @@ import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 
 import {AppComponent} from './app.component';
-import {ZipcodeEntryComponent} from './zipcode-entry/zipcode-entry.component';
-import {ForecastsListComponent} from './forecasts-list/forecasts-list.component';
-import {CurrentConditionsComponent} from './current-conditions/current-conditions.component';
-import {MainPageComponent} from './main-page/main-page.component';
+import {ZipcodeEntryComponent} from './features/main-page/zipcode-entry/zipcode-entry.component';
+import {ForecastsListComponent} from './features/forecasts-list/forecasts-list.component';
+import {CurrentConditionsComponent} from './features/current-conditions/current-conditions.component';
+import {MainPageComponent} from './features/main-page/main-page.component';
 import {RouterModule} from '@angular/router';
-import {routing} from './app.routing';
+import {WeatherRouting} from './app.routing';
 import {provideHttpClient, withInterceptorsFromDi} from '@angular/common/http';
 import {ServiceWorkerModule} from '@angular/service-worker';
 import {environment} from '../environments/environment';
@@ -18,7 +18,7 @@ import {environment} from '../environments/environment';
         BrowserModule,
         FormsModule,
         RouterModule,
-        routing,
+        WeatherRouting,
         ServiceWorkerModule.register('/ngsw-worker.js', {enabled: environment.production})
     ],
     declarations: [

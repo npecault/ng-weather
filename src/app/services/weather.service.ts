@@ -23,6 +23,7 @@ export class WeatherService {
     toSignal(
       toObservable(computed(() => this.locationService.locations())).pipe(
         switchMap(locations =>
+          locations.length > 0 ?
           forkJoin(
             locations.map(zip => this.getCurrentConditionsZip(zip).pipe(
               map(data => ({zip: zip, data: data})),
@@ -30,7 +31,7 @@ export class WeatherService {
             ))
           ).pipe(
             map(locations => locations.filter(l => l !== null))
-          )
+          ) : of([])
         )
       ), {initialValue: []}
     )

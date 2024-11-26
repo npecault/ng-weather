@@ -1,28 +1,36 @@
 import {Component, inject, Signal} from '@angular/core';
-import {WeatherService} from '../../services/weather.service';
-import {LocationService} from '../../services/location.service';
-import {Router, RouterLink} from '@angular/router';
+import {Router} from '@angular/router';
 import {ConditionsAndZip} from '../../model/conditions-and-zip.type';
-import {CommonModule, DecimalPipe} from '@angular/common';
+import {CommonModule} from '@angular/common';
+import {TabsOutletComponent} from '../../shared/tabs-outlet/tabs-outlet.component';
+import {TabDirective} from '../../shared/tab.directive';
+import {WeatherService} from '../../services/weather.service';
+import {LocationConditionComponent} from './location-condition/location-condition.component';
+import {LocationService} from '../../services/location.service';
 
 @Component({
   selector: 'app-current-conditions',
   templateUrl: './current-conditions.component.html',
   imports: [
-    DecimalPipe,
-    RouterLink,
-    CommonModule
+    CommonModule,
+    TabsOutletComponent,
+    TabDirective,
+    LocationConditionComponent
   ],
   styleUrls: ['./current-conditions.component.css']
 })
 export class CurrentConditionsComponent {
+  private router = inject(Router);
 
   protected weatherService = inject(WeatherService);
-  private router = inject(Router);
   protected locationService = inject(LocationService);
   protected currentConditionsByZip: Signal<ConditionsAndZip[]> = this.weatherService.currentConditions;
 
-  showForecast(zipcode: string) {
-    this.router.navigate(['/forecast', zipcode])
+  showForecast(zipcode: string): void {
+    this.router.navigate(['/forecast', zipcode]).catch(err => console.error(`Cannot navigate to zipcode ${zipcode}`, err));
+  }
+
+  onRemoveLocation(zipcode: string): void {
+    this.locationService.removeLocation(zipcode);
   }
 }

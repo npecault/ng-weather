@@ -1,0 +1,5 @@
+<div class="p-2 border border-black border-1">
+    @if (activeTab() !== undefined) {
+        <ng-container [ngTemplateOutlet]="activeTab()"></ng-container>
+    }
+</div>

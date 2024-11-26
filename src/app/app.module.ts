@@ -4,9 +4,7 @@ import {FormsModule} from '@angular/forms';
 
 import {AppComponent} from './app.component';
 import {ZipcodeEntryComponent} from './zipcode-entry/zipcode-entry.component';
-import {LocationService} from './location.service';
 import {ForecastsListComponent} from './forecasts-list/forecasts-list.component';
-import {WeatherService} from './weather.service';
 import {CurrentConditionsComponent} from './current-conditions/current-conditions.component';
 import {MainPageComponent} from './main-page/main-page.component';
 import {RouterModule} from '@angular/router';
@@ -16,6 +14,13 @@ import {ServiceWorkerModule} from '@angular/service-worker';
 import {environment} from '../environments/environment';
 
 @NgModule({
+    imports: [
+        BrowserModule,
+        FormsModule,
+        RouterModule,
+        routing,
+        ServiceWorkerModule.register('/ngsw-worker.js', {enabled: environment.production})
+    ],
     declarations: [
         AppComponent,
         ZipcodeEntryComponent,
@@ -23,13 +28,8 @@ import {environment} from '../environments/environment';
         CurrentConditionsComponent,
         MainPageComponent
     ],
-    bootstrap: [AppComponent],
-    imports: [BrowserModule,
-        FormsModule,
-        RouterModule,
-        routing,
-        ServiceWorkerModule.register('/ngsw-worker.js', {enabled: environment.production})],
-    providers: [LocationService, WeatherService, provideHttpClient(withInterceptorsFromDi())]
+    providers: [provideHttpClient(withInterceptorsFromDi())],
+    bootstrap: [AppComponent]
 })
 export class AppModule {
 }

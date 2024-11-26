@@ -6,7 +6,7 @@ import {CurrentConditions} from './current-conditions/current-conditions.type';
 import {ConditionsAndZip} from './conditions-and-zip.type';
 import {Forecast} from './forecasts-list/forecast.type';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class WeatherService {
 
   static URL = 'https://api.openweathermap.org/data/2.5';

@@ -1,9 +1,8 @@
-import {RouterModule, Routes} from '@angular/router';
+import {Routes} from '@angular/router';
 import {ForecastsListComponent} from './features/forecasts-list/forecasts-list.component';
 import {MainPageComponent} from './features/main-page/main-page.component';
-import {ModuleWithProviders} from '@angular/core';
 
-const appRoutes: Routes = [
+export const WeatherRoutes: Routes = [
   {
     path: '', component: MainPageComponent
   },
@@ -11,4 +10,4 @@ const appRoutes: Routes = [
     path: 'forecast/:zipcode', component: ForecastsListComponent
   }
 ];
-export const WeatherRouting: ModuleWithProviders<RouterModule> = RouterModule.forRoot(appRoutes);
+

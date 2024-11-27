@@ -1,4 +1,4 @@
-import {Component, computed, inject, input, InputSignal, OnInit, output, OutputEmitterRef} from '@angular/core';
+import {Component, computed, inject, input, InputSignal, output, OutputEmitterRef} from '@angular/core';
 import {DecimalPipe} from '@angular/common';
 import {ConditionsAndZip} from '../../../model/conditions-and-zip.type';
 import {WeatherService} from '../../../services/weather.service';

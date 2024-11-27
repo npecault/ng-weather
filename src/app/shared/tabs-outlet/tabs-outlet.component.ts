@@ -1,4 +1,4 @@
-import {AfterContentInit, Component, computed, contentChildren, effect, OnInit, output, signal, WritableSignal} from '@angular/core';
+import {Component, computed, contentChildren, effect, signal, WritableSignal} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {TabDirective} from '../tab.directive';
 import {TabsOutletTokenComponent} from './tabs-outlet-token.component';

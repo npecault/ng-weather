@@ -1,9 +1,11 @@
-import {effect, Injectable, signal, Signal, WritableSignal} from '@angular/core';
+import {effect, inject, Injectable, signal, Signal, WritableSignal} from '@angular/core';
+import {BrowserStorageService} from './browser-storage.service';
 
 export const LOCATIONS = 'locations';
 
 @Injectable({providedIn: 'root'})
 export class LocationService {
+  private readonly storage = inject(BrowserStorageService);
 
   private readonly _locations: WritableSignal<string[]> = signal([]);
   /**
@@ -12,15 +14,14 @@ export class LocationService {
   readonly locations: Signal<string[]> = this._locations.asReadonly();
 
   constructor() {
-    const locString = localStorage.getItem(LOCATIONS);
-    if (locString) {
-      const locations: string[] = JSON.parse(locString);
-      this._locations.set(locations);
+    const storedLocations = this.storage.get<string[]>(LOCATIONS);
+
+    if (storedLocations !== undefined) {
+      this._locations.set(storedLocations);
     }
 
     effect(() => {
-      const locationsString = JSON.stringify(this.locations());
-      localStorage.setItem(LOCATIONS, locationsString);
+      this.storage.set(LOCATIONS, this.locations());
     });
   }
 

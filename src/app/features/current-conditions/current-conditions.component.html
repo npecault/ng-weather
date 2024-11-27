@@ -1,13 +1,14 @@
-<div>
-    <app-tabs-outlet>
-        @for (location of currentConditionsByZip(); track location.zip) {
-            <ng-template appTab [tabId]="location.zip">
-                <app-location-condition
-                        [location]="location"
-                        (clickCard)="showForecast(location.zip)"
-                        (removeLocation)="onRemoveLocation(location.zip)">
-                </app-location-condition>
-            </ng-template>
-        }
-    </app-tabs-outlet>
-</div>
+<app-tabs-outlet>
+    @for (location of currentConditionsByZip(); track $index) {
+        <ng-template appTab
+                     [tabId]="'' + location.data.id + $index"
+                     [tabName]="tabName(location)"
+                     [default]="$first"
+                     (closeTab)="onRemoveLocation(location.zip)">
+            <app-location-condition
+                    [location]="location"
+                    (clickCard)="showForecast(location.zip)">
+            </app-location-condition>
+        </ng-template>
+    }
+</app-tabs-outlet>

@@ -6,14 +6,15 @@ import {FormsModule} from '@angular/forms';
 import {provideRouter} from '@angular/router';
 import {WeatherRoutes} from './app/app.routing';
 import {ServiceWorkerModule} from '@angular/service-worker';
-import {provideHttpClient, withInterceptorsFromDi} from '@angular/common/http';
+import {provideHttpClient, withInterceptors} from '@angular/common/http';
+import {cacheInterceptor} from './app/interceptors/cache.interceptor';
 
 if (environment.production) {
   enableProdMode();
 }
 
 bootstrapApplication(AppComponent, {
-  providers: [provideHttpClient(withInterceptorsFromDi()), provideRouter(WeatherRoutes), importProvidersFrom(
+  providers: [provideHttpClient(withInterceptors([cacheInterceptor])), provideRouter(WeatherRoutes), importProvidersFrom(
     BrowserModule,
     FormsModule,
     ServiceWorkerModule.register('/ngsw-worker.js', {enabled: environment.production})

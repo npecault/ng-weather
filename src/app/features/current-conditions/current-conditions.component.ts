@@ -7,6 +7,7 @@ import {TabDirective} from '../../shared/tab.directive';
 import {WeatherService} from '../../services/weather.service';
 import {LocationConditionComponent} from './location-condition/location-condition.component';
 import {LocationService} from '../../services/location.service';
+import {LocationError} from '../../model/location-error.type';
 
 @Component({
   selector: 'app-current-conditions',
@@ -24,7 +25,7 @@ export class CurrentConditionsComponent {
 
   protected readonly weatherService = inject(WeatherService);
   protected readonly locationService = inject(LocationService);
-  protected readonly currentConditionsByZip: Signal<ConditionsAndZip[]> = this.weatherService.currentConditions;
+  protected readonly currentConditionsByZip: Signal<(ConditionsAndZip | LocationError)[]> = this.weatherService.currentConditions;
 
   protected showForecast(zipcode: string): void {
     this.router.navigate(['/forecast', zipcode]).catch(err => console.error(`Cannot navigate to zipcode ${zipcode}`, err));

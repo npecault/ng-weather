@@ -1,7 +1,7 @@
 import {inject, Injectable, Signal} from '@angular/core';
 import {forkJoin, Observable, of} from 'rxjs';
 
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {CurrentConditions} from '../features/current-conditions/current-conditions.type';
 import {ConditionsAndZip} from '../model/conditions-and-zip.type';
 import {Forecast} from '../features/forecasts-list/forecast.type';
@@ -9,6 +9,7 @@ import {environment} from '../../environments/environment';
 import {LocationService} from './location.service';
 import {toObservable, toSignal} from '@angular/core/rxjs-interop';
 import {catchError, map, switchMap} from 'rxjs/operators';
+import {LocationError} from '../model/location-error.type';
 
 @Injectable({providedIn: 'root'})
 export class WeatherService {
@@ -19,7 +20,7 @@ export class WeatherService {
   private readonly http = inject(HttpClient);
   private readonly locationService = inject(LocationService);
 
-  readonly currentConditions: Signal<ConditionsAndZip[]> =
+  readonly currentConditions: Signal<(ConditionsAndZip | LocationError)[]> =
     toSignal(
       toObservable(this.locationService.locations).pipe(
         switchMap(locations =>
@@ -56,14 +57,12 @@ export class WeatherService {
     }
   }
 
-  private mapLocationsToConditions(locations: string[]): Observable<ConditionsAndZip[]> {
+  private mapLocationsToConditions(locations: string[]): Observable<(ConditionsAndZip | LocationError)[]> {
     return forkJoin(
       locations.map(zip => this.getCurrentConditionsZip(zip).pipe(
         map(data => ({zip: zip, data: data})),
-        catchError(() => of(null))
+        catchError((err: HttpErrorResponse) => of({zip: zip, error: JSON.stringify(err.error)}))
       ))
-    ).pipe(
-      map(locations => locations.filter(l => l !== null))
     )
   }
 }

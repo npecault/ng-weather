@@ -1,14 +1,24 @@
 <app-tabs-outlet>
     @for (location of currentConditionsByZip(); track $index) {
-        <ng-template appTab
-                     [tabId]="'' + location.data.id + $index"
-                     [tabName]="tabName(location)"
-                     [default]="$first"
-                     (closeTab)="onRemoveLocation(location.zip)">
-            <app-location-condition
-                    [location]="location"
-                    (clickCard)="showForecast(location.zip)">
-            </app-location-condition>
-        </ng-template>
+        @if (location.data !== undefined) {
+            <ng-template appTab
+                         [tabId]="'' + location.data.id + $index"
+                         [tabName]="tabName(location)"
+                         [default]="$first"
+                         (closeTab)="onRemoveLocation(location.zip)">
+                <app-location-condition
+                        [location]="location"
+                        (clickCard)="showForecast(location.zip)">
+                </app-location-condition>
+            </ng-template>
+        } @else {
+            <ng-template appTab
+                         [tabId]="'' + location.zip + $index"
+                         [tabName]="location.zip"
+                         (closeTab)="onRemoveLocation(location.zip)">
+                An error has occurred when fetching the location: {{ location.error }}
+            </ng-template>
+        }
+
     }
 </app-tabs-outlet>

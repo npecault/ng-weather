@@ -22,9 +22,9 @@ import {LocationService} from '../../services/location.service';
 export class CurrentConditionsComponent {
   private router = inject(Router);
 
-  protected weatherService = inject(WeatherService);
-  protected locationService = inject(LocationService);
-  protected currentConditionsByZip: Signal<ConditionsAndZip[]> = this.weatherService.currentConditions;
+  protected readonly weatherService = inject(WeatherService);
+  protected readonly locationService = inject(LocationService);
+  protected readonly currentConditionsByZip: Signal<ConditionsAndZip[]> = this.weatherService.currentConditions;
 
   protected showForecast(zipcode: string): void {
     this.router.navigate(['/forecast', zipcode]).catch(err => console.error(`Cannot navigate to zipcode ${zipcode}`, err));

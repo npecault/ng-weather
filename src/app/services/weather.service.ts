@@ -1,4 +1,4 @@
-import {computed, inject, Injectable, Signal} from '@angular/core';
+import {inject, Injectable, Signal} from '@angular/core';
 import {forkJoin, Observable, of} from 'rxjs';
 
 import {HttpClient} from '@angular/common/http';
@@ -21,17 +21,11 @@ export class WeatherService {
 
   readonly currentConditions: Signal<ConditionsAndZip[]> =
     toSignal(
-      toObservable(computed(() => this.locationService.locations())).pipe(
+      toObservable(this.locationService.locations).pipe(
         switchMap(locations =>
           locations.length > 0 ?
-          forkJoin(
-            locations.map(zip => this.getCurrentConditionsZip(zip).pipe(
-              map(data => ({zip: zip, data: data})),
-              catchError(() => of(null))
-            ))
-          ).pipe(
-            map(locations => locations.filter(l => l !== null))
-          ) : of([])
+            this.mapLocationsToConditions(locations)
+            : of([])
         )
       ), {initialValue: []}
     )
@@ -60,5 +54,16 @@ export class WeatherService {
     } else {
       return this.icon_url + 'art_clear.png';
     }
+  }
+
+  private mapLocationsToConditions(locations: string[]): Observable<ConditionsAndZip[]> {
+    return forkJoin(
+      locations.map(zip => this.getCurrentConditionsZip(zip).pipe(
+        map(data => ({zip: zip, data: data})),
+        catchError(() => of(null))
+      ))
+    ).pipe(
+      map(locations => locations.filter(l => l !== null))
+    )
   }
 }

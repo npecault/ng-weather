@@ -8,6 +8,6 @@ export const cacheInterceptor: HttpInterceptorFn = (req, next) => {
 
   return cache.match<{ [key in keyof HttpResponse<unknown>]: HttpResponse<unknown>[key] }, HttpResponse<unknown>>(
     req.url,
-    () => next(req).pipe(filter(event => event instanceof HttpResponse)),
+    next(req).pipe(filter(event => event instanceof HttpResponse)),
     cachedResponse => new HttpResponse({body: cachedResponse.body}));
 };

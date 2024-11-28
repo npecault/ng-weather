@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/shared/tabs-outlet/tabs-outlet.component.scss"],
+  "sourcesContent": [".tab {\r\n  border-radius: 10px 10px 0 0;\r\n}\r\n\r\n.selected-tab {\r\n  border: 2px solid var(--bs-primary);\r\n}\r\n"],
+  "mappings": ";AAAA,CAAA;AACE,iBAAA,KAAA,KAAA,EAAA;;AAGF,CAAA;AACE,UAAA,IAAA,MAAA,IAAA;;",
+  "names": []
+}

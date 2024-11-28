@@ -1,6 +1,6 @@
 <div class="d-flex flex-column">
     <div class="d-flex flex-row gap-2">
-        @for (tab of tabs(); track $index) {
+        @for (tab of tabs(); track '' + $index + tab.tabId()) {
             <div role="button"
                  (click)="tabClick(tab)"
                  class="p-1 tab d-flex gap-3 bg-secondary text-white"
